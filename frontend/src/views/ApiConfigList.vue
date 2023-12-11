@@ -81,6 +81,10 @@ export default {
                 if (response.ok) {
                     response.json().then(data => {
                         this.apiGroupList = data
+                        if(this.apiGroupList.length > 0){
+                            this.apiGroupId = data[0].id
+                            this.changeApiGroup(this.apiGroupId)
+                        }
                     })
                 }
             })
