@@ -38,8 +38,8 @@ public class DataSourceConfig implements Serializable {
     /**
      * URL
      */
-    @Column("jdbc_url")
-    private String jdbcUrl;
+    @Column("url")
+    private String url;
 
     /**
      * 用户名

@@ -93,7 +93,7 @@ public class ApiController {
         if (param == null) {
             param = new ParamMap();
         }
-        param.setSqlStatement(apiConfig.getSqlStatement());
+        param.setSqlStatement(apiConfig.getStatement());
         apiService.insert(apiConfig, param);
         clearCache(apiConfig);
     }
@@ -104,7 +104,7 @@ public class ApiController {
         if (param == null) {
             param = new ParamMap();
         }
-        param.setSqlStatement(apiConfig.getSqlStatement());
+        param.setSqlStatement(apiConfig.getStatement());
         apiService.update(apiConfig, param);
         clearCache(apiConfig);
     }
@@ -156,7 +156,7 @@ public class ApiController {
             String pageSize = requestParam.get("pageSize");
             param.put("pageSize", StringUtils.hasLength(pageSize) ? Integer.parseInt(pageSize) : 10);
         }
-        param.setSqlStatement(apiConfig.getSqlStatement());
+        param.setSqlStatement(apiConfig.getStatement());
         return param;
     }
 

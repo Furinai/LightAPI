@@ -35,7 +35,7 @@ public class DataSourceServiceImpl implements DataSourceService {
 
     @Override
     public Connection getConnection(DataSourceConfig dataSourceConfig) {
-        String url = dataSourceConfig.getJdbcUrl();
+        String url = dataSourceConfig.getUrl();
         String username = dataSourceConfig.getUsername();
         String password = dataSourceConfig.getPassword();
         Connection connection;
@@ -52,7 +52,7 @@ public class DataSourceServiceImpl implements DataSourceService {
     public ApiMapper getApiMapper(Integer dataSourceConfigId) {
         DataSourceConfig dataSourceConfig = dataSourceConfigService.getById(dataSourceConfigId);
         HikariDataSource hikariDataSource = new HikariDataSource();
-        hikariDataSource.setJdbcUrl(dataSourceConfig.getJdbcUrl());
+        hikariDataSource.setJdbcUrl(dataSourceConfig.getUrl());
         hikariDataSource.setUsername(dataSourceConfig.getUsername());
         hikariDataSource.setPassword(dataSourceConfig.getPassword());
         Configuration configuration = new Configuration();

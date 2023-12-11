@@ -9,8 +9,8 @@
         <el-form-item label="名称" prop="name">
             <el-input v-model="dataSourceConfig.name"></el-input>
         </el-form-item>
-        <el-form-item label="URL" prop="jdbcUrl">
-            <el-input v-model="dataSourceConfig.jdbcUrl"></el-input>
+        <el-form-item label="URL" prop="url">
+            <el-input v-model="dataSourceConfig.url"></el-input>
         </el-form-item>
         <el-form-item label="用户名" prop="username">
             <el-input v-model="dataSourceConfig.username"></el-input>
@@ -44,7 +44,7 @@ export default {
     data() {
         return {
             dataSourceTypeList: [
-                'MySQL', 'MariaDB', 'PostgreSQL', 'Oracle', 'MSSQL', '其它'
+                'Elasticsearch', 'MySQL', 'MariaDB', 'PostgreSQL', 'Oracle', 'MSSQL', '其它'
             ],
             validationRule: {
                 type: [
@@ -54,7 +54,7 @@ export default {
                     {required: true, message: '请输入名称', trigger: 'blur'},
                     {min: 1, max: 20, message: '名称长度在 1 到 20 个字符之间', trigger: 'blur'}
                 ],
-                jdbcUrl: [
+                url: [
                     {required: true, message: '请输入URL', trigger: 'blur'},
                     {min: 1, max: 200, message: 'URL长度在 1 到 200 个字符之间', trigger: 'blur'}
                 ],
@@ -96,23 +96,29 @@ export default {
         },
         changeType(value) {
             switch (value) {
+                case 'Elasticsearch':
+                    this.dataSourceConfig.url = 'http://localhost:9200'
+                    break;
+                case 'MongoDB':
+                    this.dataSourceConfig.url = 'mongodb://localhost:27017/test'
+                    break;
                 case 'MySQL':
-                    this.dataSourceConfig.jdbcUrl = 'jdbc:mysql://localhost:3306/'
+                    this.dataSourceConfig.url = 'jdbc:mysql://localhost:3306/test'
                     break;
                 case 'MariaDB':
-                    this.dataSourceConfig.jdbcUrl = 'jdbc:mariadb://localhost:3306/'
+                    this.dataSourceConfig.url = 'jdbc:mariadb://localhost:3306/test'
                     break;
                 case 'PostgreSQL':
-                    this.dataSourceConfig.jdbcUrl = 'jdbc:postgresql://localhost:5432/postgres'
+                    this.dataSourceConfig.url = 'jdbc:postgresql://localhost:5432/test'
                     break;
                 case 'Oracle':
-                    this.dataSourceConfig.jdbcUrl = 'jdbc:oracle:thin:@localhost:1521:XE'
+                    this.dataSourceConfig.url = 'jdbc:oracle:thin:@localhost:1521:XE'
                     break;
                 case 'MSSQL':
-                    this.dataSourceConfig.jdbcUrl = 'jdbc:sqlserver://localhost\;database='
+                    this.dataSourceConfig.url = 'jdbc:sqlserver://localhost\;database=test'
                     break;
                 default:
-                    this.dataSourceConfig.jdbcUrl = ''
+                    this.dataSourceConfig.url = ''
             }
         }
     }

@@ -45,10 +45,10 @@ public class ApiConfig implements Serializable {
     private HttpMethod requestMethod;
 
     /**
-     * SQL语句
+     * 执行语句
      */
-    @Column("sql_statement")
-    private String sqlStatement;
+    @Column("statement")
+    private String statement;
 
     /**
      * 数据源配置ID
