@@ -21,9 +21,9 @@
                 </el-table>
             </template>
         </el-table-column>
-        <el-table-column prop="name" label="名称" width="200"/>
         <el-table-column prop="requestMethod" label="请求方法" width="100"/>
         <el-table-column prop="requestPath" label="请求路径"/>
+        <el-table-column prop="name" label="接口名称" width="200"/>
         <el-table-column prop="listable" label="是否列表" width="100" :formatter="formatBoolean"/>
         <el-table-column prop="pageable" label="是否分页" width="100" :formatter="formatBoolean"/>
         <el-table-column prop="enable" label="是否启用" width="100">
