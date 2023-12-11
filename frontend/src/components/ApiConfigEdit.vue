@@ -81,7 +81,7 @@
                     </el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="SQL">
+            <el-form-item label="SQL" prop="sqlStatement">
                 <el-input type="textarea" :autosize="{ minRows: 15, maxRows: 20}" v-model="apiConfig.sqlStatement"
                           :input-style="{'font-family': 'Consolas', 'font-size': '20px', color: '#409EFF'}"/>
             </el-form-item>
@@ -214,8 +214,4 @@ export default {
 </script>
 
 <style scoped>
-.codeEditor {
-    font-size: 18px;
-    color: #409EFF !important;
-}
 </style>
