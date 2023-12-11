@@ -10,14 +10,43 @@
         <el-form-item label="请求参数:">
             <el-form-item v-for="param in apiConfig.paramConfigList" :label="param.name">
                 <div v-if="param.type==='日期时间'">
-                    <el-date-picker v-model="param.value"
-                                    type="datetime" value-format="YYYY-MM-DD HH:mm:ss"/>
+                    <div v-if="param.listable">
+                        <div v-for="(item, index) in param.values ">
+                            <el-date-picker v-model="item.value" type="datetime" value-format="YYYY-MM-DD HH:mm:ss"/>
+                            <el-button size="small" type="danger" @click="removeParamItem(param.values, index)">删除本项
+                            </el-button>
+                        </div>
+                        <el-button size="small" type="primary" @click="addParamItem(param.values)">新增一项</el-button>
+                    </div>
+                    <div v-else>
+                        <el-date-picker v-model="param.value" type="datetime" value-format="YYYY-MM-DD HH:mm:ss"/>
+                    </div>
                 </div>
                 <div v-else-if="param.type==='字符串'">
-                    <el-input v-model="param.value"/>
+                    <div v-if="param.listable">
+                        <div v-for="(item, index) in param.values ">
+                            <el-input v-model="item.value"/>
+                            <el-button size="small" type="danger" @click="removeParamItem(param.values, index)">删除本项
+                            </el-button>
+                        </div>
+                        <el-button size="small" type="primary" @click="addParamItem(param.values)">新增一项</el-button>
+                    </div>
+                    <div v-else>
+                        <el-input v-model="param.value"/>
+                    </div>
                 </div>
                 <div v-else>
-                    <el-input v-model.number="param.value"/>
+                    <div v-if="param.listable">
+                        <div v-for="(item, index) in param.values">
+                            <el-input v-model.number="item.value"/>
+                            <el-button size="small" type="danger" @click="removeParamItem(param.values, index)">删除本项
+                            </el-button>
+                        </div>
+                        <el-button size="small" type="primary" @click="addParamItem(param.values)">新增一项</el-button>
+                    </div>
+                    <div v-else>
+                        <el-input v-model.number="param.value"/>
+                    </div>
                 </div>
             </el-form-item>
             <el-form-item v-if:="apiConfig.pageable" label="PageNum">
@@ -46,9 +75,7 @@ export default {
             apiConfig: {},
             completeRequestPath: '',
             requestParam: {},
-            responseContent: '',
-            responseStatus: '',
-            responseStatusText: ''
+            responseContent: ''
         }
     },
     created() {
@@ -60,14 +87,23 @@ export default {
                 if (response.ok) {
                     response.json().then(data => {
                         this.apiConfig = data
-                        let baseUrl = import.meta.env.VITE_BASE_API_URL
-                        this.completeRequestPath = baseUrl + data.requestPath
+                        this.completeRequestPath = import.meta.env.VITE_BASE_API_URL + data.requestPath
+                        this.apiConfig.paramConfigList.forEach(paramConfig => {
+                            if (paramConfig.listable) {
+                                paramConfig.values = []
+                            }
+                        })
                     })
                 }
             })
         },
         testApi: function () {
             this.apiConfig.paramConfigList.map(param => {
+                if (param.listable) {
+                    param.value = param.values.map(item => {
+                        return item.value
+                    })
+                }
                 this.requestParam[param.key] = param.value
             })
             let requestMethod = this.apiConfig.requestMethod
@@ -92,6 +128,12 @@ export default {
         copyToBoard() {
             document.execCommand('copy', false, this.completeRequestPath)
             this.$message.success('复制成功')
+        },
+        addParamItem(values) {
+            values.push({value: null})
+        },
+        removeParamItem(values, index) {
+            values.splice(index, 1)
         }
     }
 }
