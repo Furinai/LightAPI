@@ -60,7 +60,7 @@ function getToken(baseUrl) {
             } else {
                 response.text().then(message => {
                     ElMessage.error(message)
-                    getToken()
+                    getToken(baseUrl)
                 })
             }
         })
