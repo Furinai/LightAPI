@@ -1,0 +1,49 @@
+{
+  "properties": [
+    {
+      "name": "light.user.password",
+      "type": "java.lang.String",
+      "description": "管理员密码."
+    },
+    {
+      "name": "light.user.token.secret",
+      "type": "java.lang.String",
+      "description": "Token签名密钥，至少32个字符."
+    },
+    {
+      "name": "light.user.token.expiration-time",
+      "type": "java.lang.Long",
+      "description": "Token有效期，单位：分钟."
+    },
+    {
+      "name": "light.auth.path",
+      "type": "java.lang.String",
+      "description": "需要验证Token的路径."
+    },
+    {
+      "name": "light.auth.excluded-path",
+      "type": "java.lang.String",
+      "description": "不需要验证Token的路径."
+    },
+    {
+      "name": "light.cors.mapping",
+      "type": "java.lang.String",
+      "description": "mapping."
+    },
+    {
+      "name": "light.cors.allowed-origins",
+      "type": "java.lang.String",
+      "description": "AllowedOrigins."
+    },
+    {
+      "name": "light.cors.allowed-methods",
+      "type": "java.lang.String",
+      "description": "AllowedMethods."
+    },
+    {
+      "name": "light.cors.allowed-headers",
+      "type": "java.lang.String",
+      "description": "AllowedHeaders."
+    }
+  ]
+}

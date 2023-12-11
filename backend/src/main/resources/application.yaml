@@ -1,0 +1,27 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: LightAPI
+  dataSource:
+    url: jdbc:mysql://localhost:3306/light_api?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+  cache:
+    type: caffeine
+  profiles:
+    active: default
+light:
+  user:
+    password: admin
+    token:
+      secret: DFUFDIOSFISFSIKBSDJHBSSJDGADSAFJ
+      expiration-time: 60
+  auth:
+    path: /api/sys/**
+    excluded-path: /api/sys/user/token
+  cors:
+    mapping: /api/**
+    allowed-origins: http://localhost:3000
+    allowed-methods: GET, POST, PUT, DELETE, OPTIONS
+    allowed-headers: Content-Type, Authorization
