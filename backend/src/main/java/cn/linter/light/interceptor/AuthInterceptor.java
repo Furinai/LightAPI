@@ -7,10 +7,10 @@ import com.nimbusds.jwt.SignedJWT;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,8 +28,7 @@ public class AuthInterceptor implements HandlerInterceptor {
     private String secret;
 
     @Override
-    @SuppressWarnings("NullableProblems")
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) {
+    public boolean preHandle(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object object) {
         if (HttpMethod.OPTIONS.matches(request.getMethod())) {
             return true;
         }
@@ -39,18 +38,6 @@ public class AuthInterceptor implements HandlerInterceptor {
             return false;
         }
         return true;
-    }
-
-    @Override
-    @SuppressWarnings("NullableProblems")
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object o, ModelAndView modelAndView) {
-        // 无需处理
-    }
-
-    @Override
-    @SuppressWarnings("NullableProblems")
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object o, Exception e) {
-        // 无需处理
     }
 
     private boolean verifyToken(String token) {
