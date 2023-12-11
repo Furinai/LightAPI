@@ -1,9 +1,9 @@
 package cn.linter.light.service;
 
 import cn.linter.light.entity.ApiConfig;
+import cn.linter.light.entity.PageableResultList;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpMethod;
-
-import java.util.List;
 
 /**
  * @author wangxiaoyang
@@ -30,17 +30,38 @@ public interface ApiConfigService {
     /**
      * 查询API配置列表
      *
+     * @param pageable 分页参数
      * @return API配置列表
      */
-    Iterable<ApiConfig> list();
+    PageableResultList<ApiConfig> list(Pageable pageable);
 
     /**
      * 通过分组ID查询API配置列表
      *
-     * @param groupId 分组ID
+     * @param groupId  分组ID
+     * @param pageable 分页参数
      * @return API配置列表
      */
-    List<ApiConfig> listByGroupId(Integer groupId);
+    PageableResultList<ApiConfig> listByGroupId(Integer groupId, Pageable pageable);
+
+    /**
+     * 通过数据源ID查询API配置列表
+     *
+     * @param dataSourceConfigId 数据源ID
+     * @param pageable           分页参数
+     * @return API配置列表
+     */
+    PageableResultList<ApiConfig> listByDataSourceConfigId(Integer dataSourceConfigId, Pageable pageable);
+
+    /**
+     * 通过分组ID查询API配置列表
+     *
+     * @param groupId            分组ID
+     * @param dataSourceConfigId 数据源ID
+     * @param pageable           分页参数
+     * @return API配置列表
+     */
+    PageableResultList<ApiConfig> listByGroupIdAndDataSourceConfigId(Integer groupId, Integer dataSourceConfigId, Pageable pageable);
 
     /**
      * 新增API配置

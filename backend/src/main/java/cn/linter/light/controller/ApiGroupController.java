@@ -1,12 +1,9 @@
 package cn.linter.light.controller;
 
-import cn.linter.light.entity.ApiConfig;
 import cn.linter.light.entity.ApiGroup;
 import cn.linter.light.service.ApiConfigService;
 import cn.linter.light.service.ApiGroupService;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @author wangxiaoyang
@@ -26,11 +23,6 @@ public class ApiGroupController {
     @GetMapping("{id}")
     public ApiGroup getApiGroupById(@PathVariable("id") Integer id) {
         return apiGroupService.getById(id);
-    }
-
-    @GetMapping("/{id}/api-configs")
-    public List<ApiConfig> listApiConfigByGroupId(@PathVariable("id") Integer id) {
-        return apiConfigService.listByGroupId(id);
     }
 
     @GetMapping

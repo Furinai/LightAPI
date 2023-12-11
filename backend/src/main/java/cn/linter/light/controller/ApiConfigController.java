@@ -1,7 +1,9 @@
 package cn.linter.light.controller;
 
 import cn.linter.light.entity.ApiConfig;
+import cn.linter.light.entity.PageableResultList;
 import cn.linter.light.service.ApiConfigService;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -23,8 +25,21 @@ public class ApiConfigController {
     }
 
     @GetMapping
-    public Iterable<ApiConfig> listApiConfig() {
-        return apiConfigService.list();
+    public PageableResultList<ApiConfig> listApiConfig(@RequestParam(required = false) Integer groupId,
+                                                       @RequestParam(required = false) Integer dataSourceConfigId,
+                                                       @RequestParam(required = false, defaultValue = "0") Integer page,
+                                                       @RequestParam(required = false, defaultValue = "10") Integer size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        if (groupId != null && dataSourceConfigId != null) {
+            return apiConfigService.listByGroupIdAndDataSourceConfigId(groupId, dataSourceConfigId, pageRequest);
+        }
+        if (groupId != null) {
+            return apiConfigService.listByGroupId(groupId, pageRequest);
+        }
+        if (dataSourceConfigId != null) {
+            return apiConfigService.listByDataSourceConfigId(dataSourceConfigId, pageRequest);
+        }
+        return apiConfigService.list(pageRequest);
     }
 
     @PostMapping
@@ -39,7 +54,7 @@ public class ApiConfigController {
 
     @DeleteMapping("{id}")
     public void deleteApiConfigById(@PathVariable("id") Integer id) {
-        ApiConfig apiConfig= apiConfigService.getById(id);
+        ApiConfig apiConfig = apiConfigService.getById(id);
         apiConfigService.delete(apiConfig);
     }
 

@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -13,7 +12,7 @@ import java.util.List;
 @Data
 @Builder
 @EqualsAndHashCode(callSuper = false)
-public class PageableResultList {
+public class PageableResultList<T> {
     private Long total;
-    private List<LinkedHashMap<String, Object>> list;
+    private List<T> list;
 }

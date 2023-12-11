@@ -3,13 +3,22 @@
         <el-button type="primary" size="small" @click="createApiConfig">
             新增
         </el-button>
-        <el-select v-model="apiGroupId" @change="changeApiGroup">
-            <el-option v-for="apiGroup in apiGroupList" :key="apiGroup.id"
-                       :label="apiGroup.name" :value="apiGroup.id">
-            </el-option>
-        </el-select>
+        <div>
+            <el-select v-model="dataSourceConfigId" class="mr-2">
+                <el-option v-for="dataSourceConfig in dataSourceConfigList" :key="dataSourceConfig.id"
+                           :label="dataSourceConfig.name" :value="dataSourceConfig.id">
+                </el-option>
+            </el-select>
+            <el-select v-model="apiGroupId" class="mr-2">
+                <el-option v-for="apiGroup in apiGroupList" :key="apiGroup.id"
+                           :label="apiGroup.name" :value="apiGroup.id">
+                </el-option>
+            </el-select>
+            <el-button @click="getApiList">查询</el-button>
+            <el-button @click="resetCondition">重置</el-button>
+        </div>
     </el-row>
-    <el-table :data="apiConfigList" empty-text="未选择分组或者暂无数据" border>
+    <el-table :data="apiConfigList" empty-text="暂无数据" border>
         <el-table-column label="请求参数" type="expand" width="100">
             <template #default="props">
                 <el-table :data="props.row.paramConfigList" border>
@@ -53,6 +62,9 @@
             </template>
         </el-table-column>
     </el-table>
+    <el-pagination v-model="currentPage" :total="apiConfigTotal" @current-change="handlePageChange"
+                   class="pagination" layout="prev, pager, next" :pager-count="5" background>
+    </el-pagination>
 </template>
 
 <script>
@@ -68,40 +80,55 @@ export default {
     },
     data() {
         return {
+            dataSourceConfigId: null,
+            dataSourceConfigList: [],
             apiGroupId: null,
             apiGroupList: [],
-            apiConfigList: []
+            apiConfigList: [],
+            apiConfigTotal: 0,
+            currentPage: 0,
         }
     },
     created() {
+        this.getDataSourceConfigList()
         this.getApiGroupList()
+        this.getApiList()
     },
     methods: {
+        getDataSourceConfigList() {
+            request('/sys/data-source-configs', {Method: 'GET'}).then(response => {
+                if (response.ok) {
+                    response.json().then(data => {
+                        this.dataSourceConfigList = data
+                    })
+                }
+            })
+        },
         getApiGroupList() {
             request('/sys/api-groups', {Method: 'GET'}).then(response => {
                 if (response.ok) {
                     response.json().then(data => {
                         this.apiGroupList = data
-                        if(this.apiGroupList.length > 0){
-                            this.apiGroupId = data[0].id
-                            this.changeApiGroup(this.apiGroupId)
-                        }
                     })
                 }
             })
         },
-        getApiListByGroupId(groupId) {
-            let url = '/sys/api-groups/' + groupId + '/api-configs'
-            request(url, {Method: "GET"}).then(response => {
+        getApiList() {
+            let config = {Method: "GET", param: {page: this.currentPage, size: 10}}
+            if (this.dataSourceConfigId != null) {
+                config.param.dataSourceConfigId = this.dataSourceConfigId
+            }
+            if (this.apiGroupId != null) {
+                config.param.groupId = this.apiGroupId
+            }
+            request('/sys/api-configs', config).then(response => {
                 if (response.ok) {
                     response.json().then(data => {
-                        this.apiConfigList = data
+                        this.apiConfigList = data.list
+                        this.apiConfigTotal = data.total
                     })
                 }
             })
-        },
-        changeApiGroup(groupId) {
-            this.getApiListByGroupId(groupId)
         },
         createApiConfig() {
             this.$router.push({name: 'ApiConfigCreate'})
@@ -137,6 +164,15 @@ export default {
         },
         formatBoolean(row, column, cellValue) {
             return cellValue ? '是' : '否';
+        },
+        resetCondition() {
+            this.dataSourceConfigId = null
+            this.apiGroupId = null
+            this.getApiList()
+        },
+        handlePageChange(page) {
+            this.currentPage = page - 1
+            this.getApiList()
         }
     }
 }

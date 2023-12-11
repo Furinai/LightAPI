@@ -38,12 +38,12 @@ public class ApiServiceImpl implements ApiService {
     }
 
     @Override
-    public PageableResultList getPageList(ApiConfig apiConfig, ParamMap param) {
+    public PageableResultList<LinkedHashMap<String, Object>> getPageList(ApiConfig apiConfig, ParamMap param) {
         ApiMapper apiMapper = dataSourceService.getApiMapper(apiConfig.getDataSourceConfigId());
         PageHelper.startPage((int) param.get("pageNumber"), (int) param.get("pageSize"));
         List<LinkedHashMap<String, Object>> result = apiMapper.selectList(param);
         long total = PageInfo.of(result).getTotal();
-        return PageableResultList.builder().list(result).total(total).build();
+        return PageableResultList.<LinkedHashMap<String, Object>>builder().list(result).total(total).build();
     }
 
     @Override

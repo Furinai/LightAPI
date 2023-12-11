@@ -1,15 +1,16 @@
 package cn.linter.light.service.impl;
 
 import cn.linter.light.entity.ApiConfig;
+import cn.linter.light.entity.PageableResultList;
 import cn.linter.light.exception.BusinessException;
 import cn.linter.light.repository.ApiConfigRepository;
 import cn.linter.light.service.ApiConfigService;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @author wangxiaoyang
@@ -37,13 +38,27 @@ public class ApiConfigServiceImpl implements ApiConfigService {
     }
 
     @Override
-    public List<ApiConfig> listByGroupId(Integer groupId) {
-        return apiConfigRepository.findByGroupId(groupId);
+    public PageableResultList<ApiConfig> listByGroupId(Integer groupId, Pageable pageable) {
+        Page<ApiConfig> result = apiConfigRepository.findByGroupId(groupId, pageable);
+        return PageableResultList.<ApiConfig>builder().list(result.toList()).total(result.getTotalElements()).build();
     }
 
     @Override
-    public Iterable<ApiConfig> list() {
-        return apiConfigRepository.findAll();
+    public PageableResultList<ApiConfig> listByDataSourceConfigId(Integer dataSourceConfigId, Pageable pageable) {
+        Page<ApiConfig> result = apiConfigRepository.findByDataSourceConfigId(dataSourceConfigId, pageable);
+        return PageableResultList.<ApiConfig>builder().list(result.toList()).total(result.getTotalElements()).build();
+    }
+
+    @Override
+    public PageableResultList<ApiConfig> listByGroupIdAndDataSourceConfigId(Integer groupId, Integer dataSourceConfigId, Pageable pageable) {
+        Page<ApiConfig> result = apiConfigRepository.findByGroupIdAndDataSourceConfigId(groupId, dataSourceConfigId, pageable);
+        return PageableResultList.<ApiConfig>builder().list(result.toList()).total(result.getTotalElements()).build();
+    }
+
+    @Override
+    public PageableResultList<ApiConfig> list(Pageable pageable) {
+        Page<ApiConfig> result = apiConfigRepository.findAll(pageable);
+        return PageableResultList.<ApiConfig>builder().list(result.toList()).total(result.getTotalElements()).build();
     }
 
     @Override
