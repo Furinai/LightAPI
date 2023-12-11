@@ -91,7 +91,7 @@
 
 <script>
 import request from '../utils/request'
-import {Delete, Plus} from '@element-plus/icons'
+import {Delete, Plus} from '@element-plus/icons-vue'
 
 export default {
     name: 'ApiConfigTest',

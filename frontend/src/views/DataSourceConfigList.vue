@@ -26,7 +26,7 @@
 
 <script>
 import request from '../utils/request'
-import {Delete, DocumentAdd, Edit} from '@element-plus/icons'
+import {Delete, DocumentAdd, Edit} from '@element-plus/icons-vue'
 
 export default {
     name: "DataSourceConfigList",

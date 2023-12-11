@@ -56,7 +56,7 @@
 
 <script>
 import request from '../utils/request'
-import {Delete, Edit, Monitor} from '@element-plus/icons'
+import {Delete, Edit, Monitor} from '@element-plus/icons-vue'
 
 export default {
     name: "ApiConfigList",
