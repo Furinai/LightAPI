@@ -26,10 +26,13 @@
             <el-form-item label="请求路径" prop="requestPath">
                 <el-input v-model="apiConfig.requestPath"></el-input>
             </el-form-item>
-            <el-form-item v-if="apiConfig.requestMethod === 'GET'" label="是否列表" prop="listable">
+            <el-form-item v-if="apiConfig.requestMethod === 'GET'" label="是否缓存查询结果" prop="pageable">
+                <el-switch v-model="apiConfig.cacheable"></el-switch>
+            </el-form-item>
+            <el-form-item v-if="apiConfig.requestMethod === 'GET'" label="是否列表查询" prop="listable">
                 <el-switch v-model="apiConfig.listable"></el-switch>
             </el-form-item>
-            <el-form-item v-if="apiConfig.listable" label="是否分页" prop="pageable">
+            <el-form-item v-if="apiConfig.listable" label="是否分页查询" prop="pageable">
                 <el-switch v-model="apiConfig.pageable"></el-switch>
             </el-form-item>
             <el-form-item>

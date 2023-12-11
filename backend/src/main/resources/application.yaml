@@ -7,6 +7,15 @@ spring:
     url: jdbc:mysql://localhost:3306/light_api?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
     username: root
     password: 123456
+  data:
+    redis:
+      repositories:
+        enabled: off
+  redis:
+    host: localhost
+    lettuce:
+      pool:
+        enabled: true
   cache:
     type: caffeine
   profiles:

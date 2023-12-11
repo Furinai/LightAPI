@@ -15,6 +15,7 @@ export default {
         return {
             apiConfig: {
                 paramConfigList: [],
+                cacheable: false,
                 listable: false,
                 pageable: false,
                 enable: false

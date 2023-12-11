@@ -7,72 +7,70 @@
                 </template>
             </el-input>
         </el-form-item>
-        <el-form-item label="请求参数:">
-            <el-form-item v-for="param in apiConfig.paramConfigList" :label="param.name">
-                <div v-if="param.type==='日期时间'">
-                    <div v-if="param.listable">
-                        <div v-for="(item, index) in param.values ">
-                            <el-date-picker v-model="item.value" type="datetime" value-format="YYYY-MM-DD HH:mm:ss"/>
-                            <el-button size="small" type="danger" class="removeButton"
-                                       @click="removeParamItem(param.values, index)">
-                                <el-icon>
-                                    <delete/>
-                                </el-icon>
-                            </el-button>
-                        </div>
-                        <el-button size="small" type="success" @click="addParamItem(param.values)">
+        <el-form-item v-for="param in apiConfig.paramConfigList" :label="param.name">
+            <div v-if="param.type==='日期时间'">
+                <div v-if="param.listable">
+                    <div v-for="(item, index) in param.values ">
+                        <el-date-picker v-model="item.value" type="datetime" value-format="YYYY-MM-DD HH:mm:ss"/>
+                        <el-button size="small" type="danger" class="removeButton"
+                                   @click="removeParamItem(param.values, index)">
                             <el-icon>
-                                <plus/>
+                                <delete/>
                             </el-icon>
                         </el-button>
                     </div>
-                    <div v-else>
-                        <el-date-picker v-model="param.value" type="datetime" value-format="YYYY-MM-DD HH:mm:ss"/>
-                    </div>
-                </div>
-                <div v-else-if="param.type==='字符串'">
-                    <div v-if="param.listable">
-                        <div v-for="(item, index) in param.values ">
-                            <el-input v-model="item.value"/>
-                            <el-button size="small" type="danger" class="removeButton"
-                                       @click="removeParamItem(param.values, index)">
-                                <el-icon>
-                                    <delete/>
-                                </el-icon>
-                            </el-button>
-                        </div>
-                        <el-button size="small" type="success" @click="addParamItem(param.values)">
-                            <el-icon>
-                                <plus/>
-                            </el-icon>
-                        </el-button>
-                    </div>
-                    <div v-else>
-                        <el-input v-model="param.value"/>
-                    </div>
+                    <el-button size="small" type="success" @click="addParamItem(param.values)">
+                        <el-icon>
+                            <plus/>
+                        </el-icon>
+                    </el-button>
                 </div>
                 <div v-else>
-                    <div v-if="param.listable">
-                        <div v-for="(item, index) in param.values">
-                            <el-input v-model.number="item.value"/>
-                            <el-button size="small" type="danger" class="removeButton"
-                                       @click="removeParamItem(param.values, index)">
-                                <el-icon>
-                                    <delete/>
-                                </el-icon>
-                            </el-button>
-                        </div>
-                        <el-button size="small" type="success" @click="addParamItem(param.values)">
+                    <el-date-picker v-model="param.value" type="datetime" value-format="YYYY-MM-DD HH:mm:ss"/>
+                </div>
+            </div>
+            <div v-else-if="param.type==='字符串'">
+                <div v-if="param.listable">
+                    <div v-for="(item, index) in param.values ">
+                        <el-input v-model="item.value"/>
+                        <el-button size="small" type="danger" class="removeButton"
+                                   @click="removeParamItem(param.values, index)">
                             <el-icon>
-                                <plus/>
+                                <delete/>
                             </el-icon>
                         </el-button>
                     </div>
-                    <div v-else>
-                        <el-input v-model.number="param.value"/>
-                    </div>
+                    <el-button size="small" type="success" @click="addParamItem(param.values)">
+                        <el-icon>
+                            <plus/>
+                        </el-icon>
+                    </el-button>
                 </div>
-            </el-form-item>
+                <div v-else>
+                    <el-input v-model="param.value"/>
+                </div>
+            </div>
+            <div v-else>
+                <div v-if="param.listable">
+                    <div v-for="(item, index) in param.values">
+                        <el-input v-model.number="item.value"/>
+                        <el-button size="small" type="danger" class="removeButton"
+                                   @click="removeParamItem(param.values, index)">
+                            <el-icon>
+                                <delete/>
+                            </el-icon>
+                        </el-button>
+                    </div>
+                    <el-button size="small" type="success" @click="addParamItem(param.values)">
+                        <el-icon>
+                            <plus/>
+                        </el-icon>
+                    </el-button>
+                </div>
+                <div v-else>
+                    <el-input v-model.number="param.value"/>
+                </div>
+            </div>
             <el-form-item v-if:="apiConfig.pageable" label="PageNum">
                 <el-input v-model="requestParam.pageNumber"/>
             </el-form-item>
@@ -123,14 +121,22 @@ export default {
                 }
             })
         },
-        testApi: function () {
+        testApi() {
             this.apiConfig.paramConfigList.map(param => {
                 if (param.listable) {
-                    param.value = param.values.map(item => {
-                        return item.value
-                    })
+                    param.value = []
+                    for (const item of param.values) {
+                        if (item.value != null) {
+                            param.value.push(item.value)
+                        }
+                    }
+                    if (param.value.length === 0) {
+                        param.value = null
+                    }
                 }
-                this.requestParam[param.key] = param.value
+                if (param.value != null) {
+                    this.requestParam[param.key] = param.value
+                }
             })
             let requestMethod = this.apiConfig.requestMethod
             let config = {method: requestMethod}
@@ -144,6 +150,7 @@ export default {
                 if (response.ok) {
                     this.$message.success('OK')
                     response.text().then(data => {
+                        this.requestParam = {}
                         if (data != null && data !== '') {
                             this.responseContent = JSON.stringify(JSON.parse(data), null, 4)
                         }

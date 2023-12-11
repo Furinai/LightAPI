@@ -63,13 +63,19 @@ public class ApiConfig implements Serializable {
     private Integer groupId;
 
     /**
-     * 是否列表
+     * 是否缓存
+     */
+    @Column("is_cacheable")
+    private Boolean cacheable;
+
+    /**
+     * 是否列表查询
      */
     @Column("is_listable")
     private Boolean listable;
 
     /**
-     * 是否分页
+     * 是否分页查询
      */
     @Column("is_pageable")
     private Boolean pageable;

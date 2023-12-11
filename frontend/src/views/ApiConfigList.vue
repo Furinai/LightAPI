@@ -24,8 +24,9 @@
         <el-table-column prop="requestMethod" label="请求方法" width="100"/>
         <el-table-column prop="requestPath" label="请求路径"/>
         <el-table-column prop="name" label="接口名称" width="200"/>
-        <el-table-column prop="listable" label="是否列表" width="100" :formatter="formatBoolean"/>
-        <el-table-column prop="pageable" label="是否分页" width="100" :formatter="formatBoolean"/>
+        <el-table-column prop="listable" label="是否缓存结果" width="120" :formatter="formatBoolean"/>
+        <el-table-column prop="listable" label="是否列表查询" width="120" :formatter="formatBoolean"/>
+        <el-table-column prop="pageable" label="是否分页查询" width="120" :formatter="formatBoolean"/>
         <el-table-column prop="enable" label="是否启用" width="100">
             <template #default="scope">
                 <el-switch v-model="scope.row.enable" @change="changeEnable($event,scope.row)">
