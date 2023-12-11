@@ -1,6 +1,7 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import ApiConfigList from '../views/ApiConfigList.vue'
 import ApiConfigCreate from '../views/ApiConfigCreate.vue'
+import ApiConfigTest from '../views/ApiConfigTest.vue'
 import ApiConfigUpdate from '../views/ApiConfigUpdate.vue'
 import ApiGroupList from '../views/ApiGroupList.vue'
 import ApiGroupCreate from '../views/ApiGroupCreate.vue'
@@ -29,6 +30,11 @@ const routes = [
         path: '/api-configs/update/:id',
         name: 'ApiConfigUpdate',
         component: ApiConfigUpdate
+    },
+    {
+        path: '/api-configs/test/:id',
+        name: 'ApiConfigTest',
+        component: ApiConfigTest
     },
     {
         path: '/api-groups/list',

@@ -32,8 +32,13 @@
                 </el-switch>
             </template>
         </el-table-column>
-        <el-table-column label="操作" width="150">
+        <el-table-column label="操作" width="200">
             <template #default="scope">
+                <el-button type="primary" size="small" @click="testApiConfig(scope.row)" circle>
+                    <el-icon>
+                        <monitor/>
+                    </el-icon>
+                </el-button>
                 <el-button type="warning" size="small" @click="updateApiConfig(scope.row)" circle>
                     <el-icon>
                         <edit/>
@@ -51,14 +56,14 @@
 
 <script>
 import request from '../utils/request'
-import {Delete, DocumentAdd, Edit} from '@element-plus/icons'
+import {Delete, Edit, Monitor} from '@element-plus/icons'
 
 export default {
     name: "ApiConfigList",
     components: {
         Delete,
-        DocumentAdd,
         Edit,
+        Monitor
     },
     data() {
         return {
@@ -95,6 +100,9 @@ export default {
         },
         createApiConfig() {
             this.$router.push({name: 'ApiConfigCreate'})
+        },
+        testApiConfig(apiConfig) {
+            this.$router.push({name: 'ApiConfigTest', params: {id: apiConfig.id}})
         },
         updateApiConfig(apiConfig) {
             this.$router.push({name: 'ApiConfigUpdate', params: {id: apiConfig.id}})
