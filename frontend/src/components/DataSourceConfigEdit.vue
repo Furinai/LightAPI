@@ -38,13 +38,13 @@ export default {
             }
         }
     },
-    emits:[
+    emits: [
         'submitForm'
     ],
     data() {
         return {
             dataSourceTypeList: [
-                'MySQL', 'MariaDB', 'PostgreSQL', 'Oracle', 'MSSQL'
+                'MySQL', 'MariaDB', 'PostgreSQL', 'Oracle', 'MSSQL', '其它'
             ],
             validationRule: {
                 type: [
@@ -111,6 +111,8 @@ export default {
                 case 'MSSQL':
                     this.dataSourceConfig.jdbcUrl = 'jdbc:sqlserver://localhost\;database='
                     break;
+                default:
+                    this.dataSourceConfig.jdbcUrl = ''
             }
         }
     }
