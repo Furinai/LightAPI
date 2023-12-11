@@ -1,5 +1,4 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import Index from '../views/Index.vue'
 import ApiConfigList from '../views/ApiConfigList.vue'
 import ApiConfigCreate from '../views/ApiConfigCreate.vue'
 import ApiConfigUpdate from '../views/ApiConfigUpdate.vue'
@@ -14,7 +13,7 @@ const routes = [
     {
         path: '/',
         name: 'Index',
-        component: Index
+        redirect: {name: 'ApiConfigList'}
     },
     {
         path: '/api-configs/list',

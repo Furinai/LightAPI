@@ -1,9 +1,5 @@
 <template>
-    <el-menu router>
-        <el-menu-item index="0" :route="{name: 'Index'}">
-          <i class="el-icon-house"></i>
-          <template #title>接口列表</template>
-        </el-menu-item>
+    <el-menu default-active="1" router>
         <el-menu-item index="1" :route="{name: 'ApiConfigList'}">
           <i class="el-icon-house"></i>
           <template #title>接口管理</template>
