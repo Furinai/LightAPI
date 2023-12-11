@@ -2,8 +2,6 @@ package cn.linter.light.service;
 
 import cn.linter.light.entity.ApiGroup;
 
-import java.util.List;
-
 /**
  * @author wangxiaoyang
  */

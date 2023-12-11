@@ -2,8 +2,6 @@ package cn.linter.light.service;
 
 import cn.linter.light.entity.DataSourceConfig;
 
-import java.util.List;
-
 /**
  * @author wangxiaoyang
  */
