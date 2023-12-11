@@ -106,6 +106,12 @@ public class ApiController {
                 param.put(paramKey, paramValue);
             }
         }
+        if (apiConfig.getPageable()) {
+            String pageNumber = requestParam.get("pageNumber");
+            param.put("pageNumber", StringUtils.hasLength(pageNumber) ? Integer.parseInt(pageNumber) : 1);
+            String pageSize = requestParam.get("pageSize");
+            param.put("pageSize", StringUtils.hasLength(pageSize) ? Integer.parseInt(pageSize) : 10);
+        }
         param.setSqlStatement(apiConfig.getSqlStatement());
         return param;
     }
