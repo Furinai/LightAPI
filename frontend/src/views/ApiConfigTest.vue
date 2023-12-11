@@ -13,10 +13,18 @@
                     <div v-if="param.listable">
                         <div v-for="(item, index) in param.values ">
                             <el-date-picker v-model="item.value" type="datetime" value-format="YYYY-MM-DD HH:mm:ss"/>
-                            <el-button size="small" type="danger" @click="removeParamItem(param.values, index)">删除本项
+                            <el-button size="small" type="danger" class="removeButton"
+                                       @click="removeParamItem(param.values, index)">
+                                <el-icon>
+                                    <delete/>
+                                </el-icon>
                             </el-button>
                         </div>
-                        <el-button size="small" type="primary" @click="addParamItem(param.values)">新增一项</el-button>
+                        <el-button size="small" type="success" @click="addParamItem(param.values)">
+                            <el-icon>
+                                <plus/>
+                            </el-icon>
+                        </el-button>
                     </div>
                     <div v-else>
                         <el-date-picker v-model="param.value" type="datetime" value-format="YYYY-MM-DD HH:mm:ss"/>
@@ -26,10 +34,18 @@
                     <div v-if="param.listable">
                         <div v-for="(item, index) in param.values ">
                             <el-input v-model="item.value"/>
-                            <el-button size="small" type="danger" @click="removeParamItem(param.values, index)">删除本项
+                            <el-button size="small" type="danger" class="removeButton"
+                                       @click="removeParamItem(param.values, index)">
+                                <el-icon>
+                                    <delete/>
+                                </el-icon>
                             </el-button>
                         </div>
-                        <el-button size="small" type="primary" @click="addParamItem(param.values)">新增一项</el-button>
+                        <el-button size="small" type="success" @click="addParamItem(param.values)">
+                            <el-icon>
+                                <plus/>
+                            </el-icon>
+                        </el-button>
                     </div>
                     <div v-else>
                         <el-input v-model="param.value"/>
@@ -39,10 +55,18 @@
                     <div v-if="param.listable">
                         <div v-for="(item, index) in param.values">
                             <el-input v-model.number="item.value"/>
-                            <el-button size="small" type="danger" @click="removeParamItem(param.values, index)">删除本项
+                            <el-button size="small" type="danger" class="removeButton"
+                                       @click="removeParamItem(param.values, index)">
+                                <el-icon>
+                                    <delete/>
+                                </el-icon>
                             </el-button>
                         </div>
-                        <el-button size="small" type="primary" @click="addParamItem(param.values)">新增一项</el-button>
+                        <el-button size="small" type="success" @click="addParamItem(param.values)">
+                            <el-icon>
+                                <plus/>
+                            </el-icon>
+                        </el-button>
                     </div>
                     <div v-else>
                         <el-input v-model.number="param.value"/>
@@ -67,9 +91,11 @@
 
 <script>
 import request from '../utils/request'
+import {Delete, Plus} from '@element-plus/icons'
 
 export default {
     name: 'ApiConfigTest',
+    components: {Delete, Plus},
     data() {
         return {
             apiConfig: {},
@@ -140,4 +166,9 @@ export default {
 </script>
 
 <style scoped>
+.removeButton {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
 </style>
