@@ -17,6 +17,8 @@ import java.util.List;
 @Service
 public class ApiConfigServiceImpl implements ApiConfigService {
 
+    private static final char SEPARATOR = '/';
+
     private final ApiConfigRepository apiConfigRepository;
 
     public ApiConfigServiceImpl(ApiConfigRepository apiConfigRepository) {
@@ -47,6 +49,10 @@ public class ApiConfigServiceImpl implements ApiConfigService {
     @Override
     public ApiConfig create(ApiConfig apiConfig) {
         String requestPath = apiConfig.getRequestPath();
+        if (requestPath.charAt(0) != SEPARATOR) {
+            requestPath = "/" + requestPath;
+            apiConfig.setRequestPath(requestPath);
+        }
         HttpMethod requestMethod = apiConfig.getRequestMethod();
         ApiConfig existApiConfig = apiConfigRepository.findByRequestPathAndRequestMethod(requestPath, requestMethod);
         if (existApiConfig != null) {
