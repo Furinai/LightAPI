@@ -13,7 +13,7 @@
                     <el-date-picker v-model="param.value"
                                     type="datetime" value-format="YYYY-MM-DD HH:mm:ss"/>
                 </div>
-                <div v-if="param.type==='字符串'">
+                <div v-else-if="param.type==='字符串'">
                     <el-input v-model="param.value"/>
                 </div>
                 <div v-else>
