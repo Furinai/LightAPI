@@ -35,6 +35,7 @@ export default {
             request('/sys/api-configs', config).then(response => {
                 if (response.ok) {
                     this.$message.success('更新成功！')
+                    this.$router.push({name: 'ApiConfigList'})
                 }
             })
         }

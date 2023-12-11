@@ -22,6 +22,7 @@ export default {
             request('/sys/api-groups', config).then(response => {
                 if (response.ok) {
                     this.$message.success('新增成功！')
+                    this.$router.push({name: 'ApiGroupList'})
                 }
             })
         }
