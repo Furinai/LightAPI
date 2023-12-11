@@ -82,8 +82,8 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="SQL">
-                <el-input type="textarea" :autosize="{ minRows: 15, maxRows: 20}"
-                          v-model="apiConfig.sqlStatement"></el-input>
+                <el-input type="textarea" :autosize="{ minRows: 15, maxRows: 20}" v-model="apiConfig.sqlStatement"
+                          :input-style="{'font-family': 'Consolas', 'font-size': '20px', color: '#409EFF'}"/>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="previousStep">上一步</el-button>
@@ -214,4 +214,8 @@ export default {
 </script>
 
 <style scoped>
+.codeEditor {
+    font-size: 18px;
+    color: #409EFF !important;
+}
 </style>
