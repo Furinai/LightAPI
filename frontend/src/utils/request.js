@@ -5,7 +5,7 @@ export default function (url, config) {
     delete config.param
     if (typeof param !== 'undefined') {
         let searchParams = new URLSearchParams()
-        for (const key of param) {
+        for (const key of Object.keys(param)) {
             searchParams.append(key, param[key])
         }
         url = url + '?' + searchParams
@@ -56,6 +56,7 @@ function getToken(baseUrl) {
             if (response.ok) {
                 response.text().then(data => {
                     localStorage.setItem('token', data)
+                    location.reload()
                 })
             } else {
                 response.text().then(message => {
