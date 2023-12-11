@@ -50,15 +50,21 @@ public class ApiController {
     }
 
     @PostMapping
-    public void handPostRequest(@RequestBody ParamMap param) {
+    public void handPostRequest(@RequestBody(required = false) ParamMap param) {
         ApiConfig apiConfig = getApiConfig();
+        if (param == null) {
+            param = new ParamMap();
+        }
         param.setSqlStatement(apiConfig.getSqlStatement());
         apiService.insert(apiConfig, param);
     }
 
     @PutMapping
-    public void handPutRequest(@RequestBody ParamMap param) {
+    public void handPutRequest(@RequestBody(required = false) ParamMap param) {
         ApiConfig apiConfig = getApiConfig();
+        if (param == null) {
+            param = new ParamMap();
+        }
         param.setSqlStatement(apiConfig.getSqlStatement());
         apiService.update(apiConfig, param);
     }
@@ -71,7 +77,7 @@ public class ApiController {
     }
 
     private ApiConfig getApiConfig() {
-        String requestPath = request.getServletPath().substring(5);
+        String requestPath = request.getServletPath().substring(4);
         HttpMethod requestMethod = HttpMethod.resolve(request.getMethod());
         ApiConfig apiConfig = apiConfigService.getByRequestPathAndRequestMethod(requestPath, requestMethod);
         if (apiConfig == null) {
