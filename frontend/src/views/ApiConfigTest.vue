@@ -9,9 +9,16 @@
         </el-form-item>
         <el-form-item label="请求参数:">
             <el-form-item v-for="param in apiConfig.paramConfigList" :label="param.name">
-                <el-date-picker v-if="param.type==='日期时间'" v-model="param.value"
-                                type="datetime" value-format="YYYY-MM-DD HH:mm:ss"/>
-                <el-input v-else v-model="param.value"/>
+                <div v-if="param.type==='日期时间'">
+                    <el-date-picker v-model="param.value"
+                                    type="datetime" value-format="YYYY-MM-DD HH:mm:ss"/>
+                </div>
+                <div v-if="param.type==='字符串'">
+                    <el-input v-model="param.value"/>
+                </div>
+                <div v-else>
+                    <el-input v-model.number="param.value"/>
+                </div>
             </el-form-item>
             <el-form-item v-if:="apiConfig.pageable" label="PageNum">
                 <el-input v-model="requestParam.pageNumber"/>
